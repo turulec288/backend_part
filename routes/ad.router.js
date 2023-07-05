@@ -11,7 +11,6 @@ router.post("/", isAuthenticated, async(req, res, next)=>{
       const {title, description, author, 
       image, chat, suspicious, 
       suspicionVotes, localization } = req.body
-
       if(!title){
         res.status(400).json({
           "message": "The ad must a have a title"
@@ -26,7 +25,6 @@ router.post("/", isAuthenticated, async(req, res, next)=>{
       }
       const newAd = await Ad.create(req.body)
       res.status(201).json(newAd)
-      
     } catch (error) {
       console.log(error)
       next(error)
@@ -36,21 +34,17 @@ router.post("/", isAuthenticated, async(req, res, next)=>{
 // C(R)UD
 
 // Get all Ads GET → http://localhost:5005/api/ad
-router.get("/", async(req, res, next)=>{
+router.get("/", isAuthenticated, async(req, res, next)=>{
   try {
     const allAds = await Ad.find()
-    res.status(200).json(allAds)
-    
+    res.status(200).json(allAds)  
   } catch (error) {
     console.log(error)
     next(error)
     res.status(400).json({"message": "There has been an error"})
   }
 })
-
-
 // Get all Ads GET → http://localhost:5005/api/ad/maria
-
 router.get("/:id", async(req, res, next)=>{
   // req.params = {:maria : "885"}
   try {
@@ -58,7 +52,6 @@ router.get("/:id", async(req, res, next)=>{
     const {id} = req.params //=885
     const ad = await Ad.findById(id)
     res.status(200).json(ad)
-    
   } catch (error) {
     console.log(error)
     next(error)
@@ -68,7 +61,7 @@ router.get("/:id", async(req, res, next)=>{
 
 //CRUD → EDIT
 
-router.put("/:id", async(req, res, next)=>{
+router.put("/:id", isAuthenticated, async(req, res, next)=>{
    try {
       const {id} = req.params
 
@@ -98,7 +91,7 @@ router.put("/:id", async(req, res, next)=>{
 
 })
 
-router.delete("/:id", async(req, res, next)=>{
+router.delete("/:id", isAuthenticated, async(req, res, next)=>{
   try {
     const {id} = req.params
     await Ad.findByIdAndDelete(id)
@@ -109,8 +102,6 @@ router.delete("/:id", async(req, res, next)=>{
       next(error)
   }
 })
-
-
 
 
 module.exports = router

@@ -8,6 +8,10 @@ const adSchema = new Schema(
       type: String,
       required : true
     },
+    catergory:{
+      type: [String], 
+      required : true 
+    },
     description: {
       type: String,
       required : true 
@@ -35,7 +39,12 @@ const adSchema = new Schema(
     hasBeenSold: {
       type: Boolean,
       default: false
-    }
+    }, 
+    reviews: 
+      [{type: Schema.Types.ObjectId, ref: "Review"}]
+  }, 
+  { 
+    timestamps: true
   }
 )
 

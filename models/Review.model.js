@@ -8,7 +8,9 @@ const reviewSchema = new Schema(
     }, 
     author: { 
       type: Schema.Types.ObjectId, ref: "User"
-    }
+    }, 
+    ad: 
+      {type: Schema.Types.ObjectId, ref: "Ad"}
   },
   
   { timestamps: true }

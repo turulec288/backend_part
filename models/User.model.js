@@ -28,7 +28,20 @@ const userSchema = new Schema({
   },
   localization: {
     type: String  
+  },
+  rating:{
+    type: Number,
+    max: 5,
+    min: 0 
+  }, 
+  soldProducts: 
+    [{type: Schema.Types.ObjectId, ref: "Ad"}], 
+  sellingProducts:
+    [{type: Schema.Types.ObjectId, ref: "Ad"}]
+},
+  {
+    timestamps: true
   }
-});
+  );
 
 module.exports = model("User", userSchema);
