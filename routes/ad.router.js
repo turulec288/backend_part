@@ -8,9 +8,10 @@ const { isAuthenticated } = require("../middleware/jwt.middleware")
 
 router.post("/", isAuthenticated, async(req, res, next)=>{
     try {
-      const {title, description, author, 
+      const {title, description, 
       image, chat, suspicious, 
       suspicionVotes, localization } = req.body
+      const {_id}= req.payload
       if(!title){
         res.status(400).json({
           "message": "The ad must a have a title"
@@ -23,7 +24,7 @@ router.post("/", isAuthenticated, async(req, res, next)=>{
         })
         return
       }
-      const newAd = await Ad.create(req.body)
+      const newAd = await Ad.create({...req.body, author: _id})
       res.status(201).json(newAd)
     } catch (error) {
       console.log(error)
@@ -90,6 +91,25 @@ router.put("/:id", isAuthenticated, async(req, res, next)=>{
     }
 
 })
+//EDIt SOLD
+router.put("/sold/:id", isAuthenticated, async(req, res, next)=>{
+  try {
+     const {id} = req.params
+    const {_id: currentUserId} = req.payload
+     const { 
+       } = req.body
+      
+     
+     
+     const updatedAd = await Ad.findOneAndUpdate({_id: id, author:currentUserId}, req.body, {new: true})
+     res.status(200).json(updatedAd)
+     
+   } catch (error) {
+     console.log(error)
+     next(error)
+   }
+
+})
 
 router.delete("/:id", isAuthenticated, async(req, res, next)=>{
   try {
@@ -104,10 +124,11 @@ router.delete("/:id", isAuthenticated, async(req, res, next)=>{
 })
 
 
+
 module.exports = router
 
 const objectBody = {
-    "title": "",
+    "title": "coche",
     "description": "Esta es una descripcion", 
     "image": "https://skjdhjfhasjkd.jpg", 
     "suspicious": false,
@@ -115,3 +136,4 @@ const objectBody = {
     "suspicionVotes": "0"
 }
 
+//crear una ruta en postman validacion de venta, quien lo comprado 

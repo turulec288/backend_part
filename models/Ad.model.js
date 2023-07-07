@@ -17,7 +17,8 @@ const adSchema = new Schema(
       required : true 
     }, 
     author: { 
-      type: Schema.Types.ObjectId, ref: "User" 
+      type: Schema.Types.ObjectId, ref: "User" ,
+      required: true
     }, 
     image: {
       type: String
@@ -36,12 +37,16 @@ const adSchema = new Schema(
     localization: {
       type: String  
     },
+    reviews: 
+    [{type: Schema.Types.ObjectId, ref: "Review"}],
+    
     hasBeenSold: {
       type: Boolean,
       default: false
     }, 
-    reviews: 
-      [{type: Schema.Types.ObjectId, ref: "Review"}]
+   
+
+    buyer: {type: Schema.Types.ObjectId, ref: "Review"}
   }, 
   { 
     timestamps: true
