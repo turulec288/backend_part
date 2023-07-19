@@ -52,6 +52,7 @@ router.get("/:id", async(req, res, next)=>{
     // const id = req.params.id //= 855
     const {id} = req.params //=885
     const ad = await Ad.findById(id)
+    //populate del autor
     res.status(200).json(ad)
   } catch (error) {
     console.log(error)

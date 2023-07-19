@@ -9,7 +9,8 @@ const adSchema = new Schema(
       required : true
     },
     catergory:{
-      type: [String], 
+      type: [String],
+      enum: ["option1", "option2", "option3"], 
       required : true 
     },
     description: {
@@ -21,7 +22,8 @@ const adSchema = new Schema(
       required: true
     }, 
     image: {
-      type: String
+      type: String ,
+      required: true
     }, 
     chat: {
       type: Schema.Types.ObjectId, ref: "Chat" 
